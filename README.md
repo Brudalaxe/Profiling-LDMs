@@ -79,7 +79,7 @@ These flags can be changed based on your needs and training setups.
 
 ### Profiling with PyTorch Profiler
 
-Both models can be profiled using Weights & Biases and PyTorch Profiler to monitor GPU utilization, execution time, and memory usage. Here is an example of how to integrate the PyTorch Profiler into your training script:
+Both models can be profiled using Weights & Biases and PyTorch Profiler to monitor GPU utilisation, execution time, and memory usage. Here is an example of how to integrate the PyTorch Profiler into your training script:
 
 ```python
 from pytorch_lightning import Trainer
@@ -118,68 +118,6 @@ profiler = PyTorchProfiler(
     with_stack=True
 )
 trainer_kwargs["profiler"] = profiler
-
-trainer = Trainer(**trainer_kwargs)
-```
-
-### Example Code Snippet
-
-Here is a snippet showing how the `Trainer` arguments are configured in PyTorch Lightning:
-
-```python
-# Trainer and callbacks
-trainer_kwargs = dict()
-
-# Default logger configs
-default_logger_cfgs = {
-    "wandb": {
-        "target": "pytorch_lightning.loggers.WandbLogger",
-        "params": {
-            "name": nowname,
-            "save_dir": logdir,
-            "offline": opt.debug,
-            "id": nowname,
-        }
-    },
-    "testtube": {
-        "target": "pytorch_lightning.loggers.TestTubeLogger",
-        "params": {
-            "name": "testtube",
-            "save_dir": logdir,
-        }
-    },
-}
-default_logger_cfg = default_logger_cfgs["testtube"]
-if "logger" in lightning_config:
-    logger_cfg = lightning_config.logger
-else:
-    logger_cfg = OmegaConf.create()
-logger_cfg = OmegaConf.merge(default_logger_cfg, logger_cfg)
-trainer_kwargs["logger"] = instantiate_from_config(logger_cfg)
-
-# Model checkpoint
-default_modelckpt_cfg = {
-    "target": "pytorch_lightning.callbacks.ModelCheckpoint",
-    "params": {
-        "dirpath": ckptdir,
-        "filename": "{epoch:06}",
-        "verbose": True,
-        "save_last": True,
-    }
-}
-if hasattr(model, "monitor"):
-    print(f"Monitoring {model.monitor} as checkpoint metric.")
-    default_modelckpt_cfg["params"]["monitor"] = model.monitor
-    default_modelckpt_cfg["params"]["save_top_k"] = 3
-
-if "modelcheckpoint" in lightning_config:
-    modelckpt_cfg = lightning_config.modelcheckpoint
-else:
-    modelckpt_cfg =  OmegaConf.create()
-modelckpt_cfg = OmegaConf.merge(default_modelckpt_cfg, modelckpt_cfg)
-print(f"Merged modelckpt-cfg: \n{modelckpt_cfg}")
-if version.parse(pl.__version__) < version.parse('1.4.0'):
-    trainer_kwargs["checkpoint_callback"] = instantiate_from_config(modelckpt_cfg)
 
 trainer = Trainer(**trainer_kwargs)
 ```
