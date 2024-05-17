@@ -1,6 +1,6 @@
 # Comparative Profiling of Latent Diffusion Model Training
 
-This repository accompanies the paper "Comparative Profiling: Insights Into Latent Diffusion Model Training" by Bradley Aldous and Ahmed M. Abdelmoniem, presented at the 4th Workshop on Machine Learning and Systems (EuroMLSys '24). The repository includes the code and configurations used for training and profiling the AudioLDM and Stable Diffusion models.
+This README provides instructions on how to replicate the experiments detailed in the paper "Comparative Profiling: Insights Into Latent Diffusion Model Training" by Bradley Aldous and Ahmed M. Abdelmoniem, presented at the 4th Workshop on Machine Learning and Systems (EuroMLSys '24). The experiments involve training and profiling the AudioLDM and Stable Diffusion models.
 
 ## Table of Contents
 
@@ -14,38 +14,44 @@ This repository accompanies the paper "Comparative Profiling: Insights Into Late
 
 ## Introduction
 
-Generative AI models, particularly latent diffusion models (LDMs), have shown remarkable capabilities in generating high-fidelity audio and images. This repository provides the implementation details, training commands, and profiling setup for AudioLDM and Stable Diffusion models as discussed in our paper.
+Generative AI models, particularly latent diffusion models (LDMs), have shown remarkable capabilities in generating high-fidelity audio and images. This README provides the steps to set up environments, train the models, and profile their performance using the repositories:
 
-The training environments for each model were set up according to the requirements specified in their respective repositories:
 - AudioLDM: [AudioLDM Training and Finetuning](https://github.com/haoheliu/AudioLDM-training-finetuning/tree/main)
 - Stable Diffusion: [Stable Diffusion Training](https://github.com/CompVis/latent-diffusion/tree/main)
 
 ## Installation
 
-Clone this repository and navigate to the project directory:
-
-```bash
-git clone https://github.com/yourusername/comparative-profiling-ldm.git
-cd comparative-profiling-ldm
-```
-
-Install the dependencies for each model as per their respective repositories.
+To replicate the experiments, you will need to set up the environments for both AudioLDM and Stable Diffusion models according to the instructions provided in their respective repositories.
 
 ### AudioLDM Environment Setup
 
-Follow the instructions in the [AudioLDM repository](https://github.com/haoheliu/AudioLDM-training-finetuning/tree/main) to set up the environment and install dependencies.
+1. Clone the AudioLDM repository:
+    ```bash
+    git clone https://github.com/haoheliu/AudioLDM-training-finetuning.git
+    cd AudioLDM-training-finetuning
+    ```
+
+2. Follow the installation instructions provided in the [AudioLDM repository](https://github.com/haoheliu/AudioLDM-training-finetuning/tree/main) to set up the environment and install dependencies.
 
 ### Stable Diffusion Environment Setup
 
-Follow the instructions in the [Stable Diffusion repository](https://github.com/CompVis/latent-diffusion/tree/main) to set up the environment and install dependencies.
+1. Clone the Stable Diffusion repository:
+    ```bash
+    git clone https://github.com/CompVis/latent-diffusion.git
+    cd latent-diffusion
+    ```
+
+2. Follow the installation instructions provided in the [Stable Diffusion repository](https://github.com/CompVis/latent-diffusion/tree/main) to set up the environment and install dependencies.
 
 ## Usage
 
 ### Training Commands
 
-The training commands for each model follow the instructions outlined in their respective repositories. Below are the example commands used to train the models:
+The training commands for each model are as follows. These commands assume that you have set up the environments as described above.
 
 #### AudioLDM
+
+To train the AudioLDM model, use the following command:
 
 ```bash
 python train.py --config configs/audioldm.yaml --gpus 0,1 --batch_size 16
@@ -53,13 +59,15 @@ python train.py --config configs/audioldm.yaml --gpus 0,1 --batch_size 16
 
 #### Stable Diffusion
 
+To train the Stable Diffusion model, use the following command:
+
 ```bash
 python main.py --base configs/stable-diffusion.yaml --gpus 0,1 --batch_size 16
 ```
 
 ### Profiling with PyTorch Profiler
 
-Both models were profiled using Weights & Biases and PyTorch Profiler to monitor GPU utilization, execution time, and memory usage. The PyTorch Profiler can be integrated into the training script as follows:
+Both models can be profiled using Weights & Biases and PyTorch Profiler to monitor GPU utilization, execution time, and memory usage. Here is an example of how to integrate the PyTorch Profiler into your training script:
 
 ```python
 from pytorch_lightning import Trainer
@@ -81,7 +89,7 @@ trainer = Trainer(
 )
 ```
 
-In the provided training script, the `trainer_kwargs` dictionary is used to configure the trainer and integrate profiling tools:
+In your training script, you can add the profiler to the `trainer_kwargs` dictionary as shown below:
 
 ```python
 # Trainer and callbacks
@@ -102,15 +110,71 @@ trainer_kwargs["profiler"] = profiler
 trainer = Trainer(**trainer_kwargs)
 ```
 
+### Example Code Snippet
+
+Here is a snippet showing how the `Trainer` arguments are configured in PyTorch Lightning:
+
+```python
+# Trainer and callbacks
+trainer_kwargs = dict()
+
+# Default logger configs
+default_logger_cfgs = {
+    "wandb": {
+        "target": "pytorch_lightning.loggers.WandbLogger",
+        "params": {
+            "name": nowname,
+            "save_dir": logdir,
+            "offline": opt.debug,
+            "id": nowname,
+        }
+    },
+    "testtube": {
+        "target": "pytorch_lightning.loggers.TestTubeLogger",
+        "params": {
+            "name": "testtube",
+            "save_dir": logdir,
+        }
+    },
+}
+default_logger_cfg = default_logger_cfgs["testtube"]
+if "logger" in lightning_config:
+    logger_cfg = lightning_config.logger
+else:
+    logger_cfg = OmegaConf.create()
+logger_cfg = OmegaConf.merge(default_logger_cfg, logger_cfg)
+trainer_kwargs["logger"] = instantiate_from_config(logger_cfg)
+
+# Model checkpoint
+default_modelckpt_cfg = {
+    "target": "pytorch_lightning.callbacks.ModelCheckpoint",
+    "params": {
+        "dirpath": ckptdir,
+        "filename": "{epoch:06}",
+        "verbose": True,
+        "save_last": True,
+    }
+}
+if hasattr(model, "monitor"):
+    print(f"Monitoring {model.monitor} as checkpoint metric.")
+    default_modelckpt_cfg["params"]["monitor"] = model.monitor
+    default_modelckpt_cfg["params"]["save_top_k"] = 3
+
+if "modelcheckpoint" in lightning_config:
+    modelckpt_cfg = lightning_config.modelcheckpoint
+else:
+    modelckpt_cfg =  OmegaConf.create()
+modelckpt_cfg = OmegaConf.merge(default_modelckpt_cfg, modelckpt_cfg)
+print(f"Merged modelckpt-cfg: \n{modelckpt_cfg}")
+if version.parse(pl.__version__) < version.parse('1.4.0'):
+    trainer_kwargs["checkpoint_callback"] = instantiate_from_config(modelckpt_cfg)
+
+trainer = Trainer(**trainer_kwargs)
+```
+
 ## Contributing
 
-We welcome contributions to this project. Please follow these steps to contribute:
-
-1. Fork the repository
-2. Create a new branch (`git checkout -b feature-branch`)
-3. Commit your changes (`git commit -am 'Add new feature'`)
-4. Push to the branch (`git push origin feature-branch`)
-5. Create a new Pull Request
+We welcome contributions to this project. Please fork the repository, make your changes, and create a pull request with a description of your changes.
 
 ## License
 
