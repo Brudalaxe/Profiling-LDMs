@@ -1,0 +1,145 @@
+AudioLDM Single GPU 1 epoch
+
+FIT Profiler Report
+Profile stats for: records
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------
+                                                   Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg   # of Calls
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------
+       [pl][profile][Strategy]DDPStrategy.training_step         0.01%     691.000us        21.12%        1.617s     539.049ms       0.000us         0.00%        1.302s     434.091ms             3
+                        DistributedDataParallel.forward         0.60%      45.778ms        21.10%        1.616s     538.681ms       0.000us         0.00%        1.302s     434.088ms             3
+                        [pl][profile]run_training_batch         0.02%       1.588ms        37.94%        2.905s     968.493ms       0.000us         0.00%     907.567ms     302.522ms             3
+[pl][profile][LightningModule]LatentDiffusion.optimi...         0.00%     192.000us        37.92%        2.904s     967.929ms       0.000us         0.00%     907.567ms     302.522ms             3
+                              Optimizer.step#AdamW.step        16.80%        1.286s        37.92%        2.904s     967.844ms       0.000us         0.00%     907.567ms     302.522ms             3
+autograd::engine::evaluate_function: CheckpointFunct...         0.19%      14.495ms         9.92%     759.660ms      15.826ms       0.000us         0.00%     732.818ms      15.267ms            48
+                             CheckpointFunctionBackward         1.62%     124.247ms         9.72%     744.616ms      15.513ms       0.000us         0.00%     732.510ms      15.261ms            48
+[pl][module]audioldm_train.modules.diffusionmodules....         0.03%       2.134ms         0.60%      45.913ms      15.304ms       0.000us         0.00%     699.965ms     233.322ms             3
+                                          ProfilerStep*        16.66%        1.275s        50.40%        3.859s        1.286s       0.000us         0.00%     552.997ms     184.332ms             3
+                                      aten::convolution         0.06%       4.443ms         1.52%     116.295ms     303.642us       0.000us         0.00%     530.141ms       1.384ms           383
+                                     aten::_convolution         0.07%       5.425ms         1.46%     111.852ms     292.042us       0.000us         0.00%     530.141ms       1.384ms           383
+                                           aten::conv2d         0.02%       1.428ms         1.52%     116.659ms     306.997us       0.000us         0.00%     525.511ms       1.383ms           380
+                                aten::cudnn_convolution         0.92%      70.469ms         1.20%      91.564ms     239.070us     466.013ms        18.64%     466.436ms       1.218ms           383
+[pl][module]audioldm_train.modules.latent_diffusion....         0.00%     262.000us         7.53%     576.317ms     192.106ms       0.000us         0.00%     382.147ms     127.382ms             3
+[pl][module]audioldm_train.modules.diffusionmodules....         0.06%       4.727ms         7.52%     576.023ms     192.008ms       0.000us         0.00%     382.147ms     127.382ms             3
+                                              aten::mul         0.81%      61.907ms         1.43%     109.458ms      22.522us     350.177ms        14.01%     350.744ms      72.170us          4860
+sm80_xmma_fprop_implicit_gemm_tf32f32_tf32f32_f32_nh...         0.00%       0.000us         0.00%       0.000us       0.000us     315.871ms        12.64%     315.871ms       3.631ms            87
+                                              aten::bmm         0.82%      62.962ms         1.10%      84.115ms      99.427us     289.675ms        11.59%     299.318ms     353.804us           846
+autograd::engine::evaluate_function: ConvolutionBack...         0.24%      18.271ms         3.09%     236.941ms     797.781us       0.000us         0.00%     241.846ms     814.296us           297
+                                   ConvolutionBackward0         0.03%       2.304ms         2.84%     217.345ms     731.801us       0.000us         0.00%     240.858ms     810.970us           297
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------
+Self CPU time total: 7.657s
+Self CUDA time total: 2.500s
+
+FIT Profiler Report
+Profile stats for: records
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------
+                                                   Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg   # of Calls
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------
+       [pl][profile][Strategy]DDPStrategy.training_step         0.01%     987.000us        24.27%        2.644s     881.207ms       0.000us         0.00%        2.340s     780.090ms             3
+                        DistributedDataParallel.forward         0.47%      50.847ms        24.25%        2.642s     880.723ms       0.000us         0.00%        2.340s     780.088ms             3
+autograd::engine::evaluate_function: CheckpointFunct...         0.15%      16.509ms         8.52%     928.326ms      19.340ms       0.000us         0.00%        1.732s      36.075ms            48
+                             CheckpointFunctionBackward         1.08%     117.530ms         8.37%     911.255ms      18.984ms       0.000us         0.00%        1.730s      36.050ms            48
+                        [pl][profile]run_training_batch         0.01%       1.505ms        40.40%        4.401s        1.467s       0.000us         0.00%        1.532s     510.581ms             3
+[pl][profile][LightningModule]LatentDiffusion.optimi...         0.00%     257.000us        40.38%        4.399s        1.466s       0.000us         0.00%        1.532s     510.581ms             3
+                              Optimizer.step#AdamW.step        16.11%        1.755s        40.38%        4.399s        1.466s       0.000us         0.00%        1.532s     510.581ms             3
+[pl][module]audioldm_train.modules.diffusionmodules....         0.02%       2.004ms         0.51%      55.154ms      18.385ms       0.000us         0.00%        1.442s     480.537ms             3
+                                      aten::convolution         0.04%       4.458ms         1.17%     127.579ms     328.812us       0.000us         0.00%        1.075s       2.771ms           388
+                                     aten::_convolution         0.05%       5.807ms         1.13%     123.121ms     317.322us       0.000us         0.00%        1.075s       2.771ms           388
+                                           aten::conv2d         0.02%       2.134ms         1.09%     119.063ms     311.683us       0.000us         0.00%        1.059s       2.773ms           382
+                                          ProfilerStep*        17.95%        1.956s        51.05%        5.561s        1.854s       0.000us         0.00%        1.001s     333.541ms             3
+                                aten::cudnn_convolution         0.78%      84.886ms         0.96%     104.870ms     270.284us     952.256ms        20.37%     952.655ms       2.455ms           388
+[pl][module]audioldm_train.modules.latent_diffusion....         0.00%     311.000us         4.86%     529.368ms     176.456ms       0.000us         0.00%     766.689ms     255.563ms             3
+[pl][module]audioldm_train.modules.diffusionmodules....         0.04%       4.600ms         4.86%     529.017ms     176.339ms       0.000us         0.00%     766.689ms     255.563ms             3
+                                              aten::mul         0.55%      59.758ms         0.99%     108.206ms      22.101us     734.794ms        15.72%     739.404ms     151.022us          4896
+                                              aten::bmm         0.61%      66.815ms         0.91%      98.902ms     116.905us     566.432ms        12.12%     645.973ms     763.561us           846
+sm80_xmma_fprop_implicit_gemm_tf32f32_tf32f32_f32_nh...         0.00%       0.000us         0.00%       0.000us       0.000us     638.179ms        13.65%     638.179ms       7.335ms            87
+autograd::engine::evaluate_function: ConvolutionBack...         0.15%      16.309ms         2.80%     305.162ms       1.027ms       0.000us         0.00%     522.989ms       1.761ms           297
+                                   ConvolutionBackward0         0.02%       2.060ms         2.64%     287.773ms     968.933us       0.000us         0.00%     521.165ms       1.755ms           297
+                             aten::convolution_backward         1.23%     134.000ms         2.62%     285.713ms     961.997us     456.158ms         9.76%     521.165ms       1.755ms           297
+                                     CheckpointFunction         0.13%      14.460ms         2.26%     246.233ms       5.130ms       0.000us         0.00%     486.209ms      10.129ms            48
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us     405.145ms         8.67%     405.145ms      47.077us          8606
+autograd::engine::evaluate_function: SoftmaxBackward...         0.01%     807.000us         0.10%      10.885ms     113.385us       0.000us         0.00%     335.641ms       3.496ms            96
+                                       SoftmaxBackward0         0.01%     968.000us         0.09%      10.078ms     104.979us       0.000us         0.00%     335.641ms       3.496ms            96
+                           aten::_softmax_backward_data         0.03%       2.771ms         0.08%       9.110ms      94.896us     164.921ms         3.53%     335.641ms       3.496ms            96
+                                               aten::mm         0.68%      73.713ms         1.82%     197.843ms     117.067us     223.505ms         4.78%     333.833ms     197.534us          1690
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us     307.847ms         6.58%     307.847ms       1.494ms           206
+      autograd::engine::evaluate_function: BmmBackward0         0.03%       3.025ms         0.42%      46.234ms     240.802us       0.000us         0.00%     296.609ms       1.545ms           192
+                                           BmmBackward0         0.02%       2.440ms         0.40%      43.209ms     225.047us       0.000us         0.00%     296.609ms       1.545ms           192
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------
+Self CPU time total: 10.894s
+Self CUDA time total: 4.675s
+
+LDM Single GPU 1 epoch
+
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------
+                                                   Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg   # of Calls
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------
+                                      aten::convolution         0.10%        1.685s         1.82%       29.979s     185.915us       0.000us         0.00%      243.720s       1.511ms        161250
+                                     aten::_convolution         0.13%        2.198s         1.71%       28.196s     174.861us       0.000us         0.00%      242.968s       1.507ms        161250
+                                           aten::conv2d         0.04%     641.023ms         1.79%       29.496s     189.530us       0.000us         0.00%      241.018s       1.549ms        155625
+                                aten::cudnn_convolution         0.81%       13.362s         1.22%       20.066s     128.940us      186.066s        25.05%      202.212s       1.299ms        155625
+                                              aten::bmm         0.32%        5.309s         0.39%        6.511s      38.162us      173.044s        23.30%      175.180s       1.027ms        170625
+      autograd::engine::evaluate_function: BmmBackward0         0.06%     945.843ms         0.37%        6.077s     115.752us       0.000us         0.00%      115.017s       2.191ms         52500
+                                           BmmBackward0         0.03%     461.247ms         0.31%        5.115s      97.420us       0.000us         0.00%      114.992s       2.190ms         52500
+autograd::engine::evaluate_function: ConvolutionBack...         0.12%        1.971s         1.99%       32.862s     330.682us       0.000us         0.00%       88.250s     888.048us         99375
+                                   ConvolutionBackward0         0.03%     556.945ms         1.86%       30.680s     308.728us       0.000us         0.00%       87.842s     883.949us         99375
+                             aten::convolution_backward         1.01%       16.677s         1.82%       30.099s     302.888us       55.994s         7.54%       87.674s     882.253us         99375
+sm86_xmma_fprop_implicit_gemm_tf32f32_tf32f32_f32_nh...         0.00%       0.000us         0.00%       0.000us       0.000us       81.458s        10.97%       81.458s       5.431ms         15000
+autograd::engine::evaluate_function: SoftmaxBackward...         0.02%     300.445ms         0.14%        2.373s      90.383us       0.000us         0.00%       75.849s       2.889ms         26250
+                           aten::_softmax_backward_data         0.04%     731.130ms         0.11%        1.875s      71.417us       37.484s         5.05%       75.821s       2.888ms         26250
+                                       SoftmaxBackward0         0.01%     165.068ms         0.12%        2.063s      78.598us       0.000us         0.00%       75.806s       2.888ms         26250
+                                ampere_sgemm_128x128_nt         0.00%       0.000us         0.00%       0.000us       0.000us       74.638s        10.05%       74.638s       1.106ms         67500
+                                ampere_sgemm_128x128_nn         0.00%       0.000us         0.00%       0.000us       0.000us       71.888s         9.68%       71.888s       1.369ms         52500
+                                       cudaLaunchKernel         2.31%       38.074s         2.38%       39.282s      10.319us       60.684s         8.17%       60.700s      15.945us       3806822
+                                             aten::add_         0.41%        6.835s         0.49%        8.154s       9.516us       43.210s         5.82%       44.843s      52.333us        856875
+                                       aten::group_norm         0.04%     683.675ms         0.96%       15.903s     128.512us       0.000us         0.00%       38.772s     313.311us        123750
+void at::native::elementwise_kernel<128, 2, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us       38.731s         5.21%       38.731s     153.013us        253125
+                                aten::native_group_norm         0.45%        7.384s         0.91%       15.038s     121.522us       32.739s         4.41%       38.592s     311.851us        123750
+                                              aten::mul         1.01%       16.671s         1.07%       17.625s     282.867us       37.530s         5.05%       38.065s     610.889us         62310
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us       37.514s         5.05%       37.514s       1.429ms         26250
+void (anonymous namespace)::softmax_warp_backward<fl...         0.00%       0.000us         0.00%       0.000us       0.000us       35.122s         4.73%       35.122s       4.683ms          7500
+                                ampere_sgemm_128x128_tn         0.00%       0.000us         0.00%       0.000us       0.000us       34.687s         4.67%       34.687s     685.174us         50625
+                                               aten::mm         0.44%        7.319s         0.61%       10.043s      52.003us       27.291s         3.67%       33.693s     174.464us        193125
+sm86_xmma_fprop_implicit_gemm_tf32f32_tf32f32_f32_nh...         0.00%       0.000us         0.00%       0.000us       0.000us       33.684s         4.54%       33.684s     690.951us         48750
+void cudnn::ops::nchwToNhwcKernel<float, float, floa...         0.00%       0.000us         0.00%       0.000us       0.000us       29.343s         3.95%       29.343s      61.131us        480000
+                                         aten::_softmax         0.05%     817.406ms         0.06%        1.035s      34.505us       28.074s         3.78%       28.354s     945.137us         30000
+void (anonymous namespace)::softmax_warp_forward<flo...         0.00%       0.000us         0.00%       0.000us       0.000us       26.471s         3.56%       26.471s       2.353ms         11250
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------
+Self CPU time total: 1651.127s
+Self CUDA time total: 742.746s
+
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------
+                                                   Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg   # of Calls
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------
+enumerate(DataLoader)#_SingleProcessDataLoaderIter._...        52.63%      868.959s        61.85%     1021.216s     544.358ms       0.000us         0.00%       0.000us       0.000us          1876
+                                            aten::copy_         7.25%      119.670s        21.47%      354.479s     667.682us       16.056s         2.16%       18.485s      34.818us        530911
+                                               aten::to         0.03%     570.813ms        18.01%      297.323s       1.218ms       0.000us         0.00%        4.514s      18.498us        244036
+                                         aten::_to_copy        -1.35%  -22312900.000us     17.97%      296.657s       2.228ms       0.000us         0.00%        4.480s      33.656us        133125
+                                  cudaStreamSynchronize        15.32%      252.978s        15.32%      252.978s      21.929ms     216.508ms         0.03%     216.508ms      18.768us         11536
+                                        cudaMemcpyAsync         4.62%       76.333s         4.64%       76.589s     636.723us        1.985s         0.27%        2.038s      16.947us        120286
+                                             aten::item        -0.25%  -4136689.000us       4.36%       72.015s      67.030us       0.000us         0.00%      43.590ms       0.041us       1074377
+                              aten::_local_scalar_dense         3.13%       51.670s         4.26%       70.372s      65.500us       2.262ms         0.00%      39.844ms       0.037us       1074377
+                                            aten::clone         0.07%        1.209s         3.73%       61.591s     239.770us       0.000us         0.00%       12.992s      50.578us        256875
+                                       aten::contiguous         0.04%     597.195ms         3.37%       55.610s     449.376us       0.000us         0.00%        5.417s      43.777us        123750
+                                       cudaLaunchKernel         2.31%       38.074s         2.38%       39.282s      10.319us       60.684s         8.17%       60.700s      15.945us       3806822
+autograd::engine::evaluate_function: ConvolutionBack...         0.12%        1.971s         1.99%       32.862s     330.682us       0.000us         0.00%       88.250s     888.048us         99375
+                                   ConvolutionBackward0         0.03%     556.945ms         1.86%       30.680s     308.728us       0.000us         0.00%       87.842s     883.949us         99375
+                             aten::convolution_backward         1.01%       16.677s         1.82%       30.099s     302.888us       55.994s         7.54%       87.674s     882.253us         99375
+                                      aten::convolution         0.10%        1.685s         1.82%       29.979s     185.915us       0.000us         0.00%      243.720s       1.511ms        161250
+                               Optimizer.step#Adam.step         0.81%       13.456s         1.79%       29.625s      15.800ms       0.000us         0.00%       22.396s      11.944ms          1875
+                                           aten::conv2d         0.04%     641.023ms         1.79%       29.496s     189.530us       0.000us         0.00%      241.018s       1.549ms        155625
+                                     aten::_convolution         0.13%        2.198s         1.71%       28.196s     174.861us       0.000us         0.00%      242.968s       1.507ms        161250
+                                              aten::div         1.39%       22.896s         1.44%       23.751s     275.375us        1.177s         0.16%        1.882s      21.819us         86250
+autograd::engine::evaluate_function: NativeGroupNorm...         0.12%        2.039s         1.43%       23.688s     280.741us       0.000us         0.00%       15.794s     187.187us         84375
+                               NativeGroupNormBackward0         0.06%     923.699ms         1.27%       20.978s     248.624us       0.000us         0.00%       14.454s     171.312us         84375
+                                aten::cudnn_convolution         0.81%       13.362s         1.22%       20.066s     128.940us      186.066s        25.05%      202.212s       1.299ms        155625
+                       aten::native_group_norm_backward         0.56%        9.170s         1.13%       18.646s     220.984us        6.398s         0.86%       12.922s     153.147us         84375
+                                              aten::mul         1.01%       16.671s         1.07%       17.625s     282.867us       37.530s         5.05%       38.065s     610.889us         62310
+                                       aten::group_norm         0.04%     683.675ms         0.96%       15.903s     128.512us       0.000us         0.00%       38.772s     313.311us        123750
+                                aten::native_group_norm         0.45%        7.384s         0.91%       15.038s     121.522us       32.739s         4.41%       38.592s     311.851us        123750
+                                              aten::sub         0.88%       14.542s         0.90%       14.939s     419.352us      13.569ms         0.00%      35.966ms       1.010us         35625
+                                            aten::empty         0.86%       14.140s         0.87%       14.326s       7.897us       0.000us         0.00%        2.168s       1.195us       1813992
+    autograd::engine::evaluate_function: AddmmBackward0         0.10%        1.617s         0.76%       12.546s     215.853us       0.000us         0.00%       11.448s     196.948us         58125
+                                           aten::linear         0.03%     482.653ms         0.63%       10.446s     123.800us       0.000us         0.00%       19.167s     227.166us         84375
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------
+Self CPU time total: 1651.127s
+Self CUDA time total: 742.746s
