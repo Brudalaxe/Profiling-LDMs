@@ -54,16 +54,26 @@ The training commands for each model are as follows. These commands assume that 
 To train the AudioLDM model, use the following command:
 
 ```bash
-python train.py --config configs/audioldm.yaml --gpus 0,1 --batch_size 16
+CUDA_VISIBLE_DEVICES=0,1 python train.py --config configs/audioldm.yaml --gpus 2 --batch_size 16
 ```
+
+In this command:
+- `CUDA_VISIBLE_DEVICES=0,1` specifies that GPUs 0 and 1 will be used.
+- `--gpus 2` indicates that two GPUs are being used for training.
+- `--batch_size 16` sets the batch size to 16.
 
 #### Stable Diffusion
 
 To train the Stable Diffusion model, use the following command:
 
 ```bash
-python main.py --base configs/stable-diffusion.yaml --gpus 0,1 --batch_size 16
+CUDA_VISIBLE_DEVICES=0,1 python main.py --base configs/stable-diffusion.yaml --gpus 2 --batch_size 16
 ```
+
+In this command:
+- `CUDA_VISIBLE_DEVICES=0,1` specifies that GPUs 0 and 1 will be used.
+- `--gpus 2` indicates that two GPUs are being used for training.
+- `--batch_size 16` sets the batch size to 16.
 
 ### Profiling with PyTorch Profiler
 
