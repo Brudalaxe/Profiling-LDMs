@@ -75,6 +75,8 @@ In this command:
 - `--gpus 2` indicates that two GPUs are being used for training.
 - `--batch_size 16` sets the batch size to 16.
 
+These flags can be changed based on your needs and training setups.
+
 ### Profiling with PyTorch Profiler
 
 Both models can be profiled using Weights & Biases and PyTorch Profiler to monitor GPU utilization, execution time, and memory usage. Here is an example of how to integrate the PyTorch Profiler into your training script:
